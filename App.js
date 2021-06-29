@@ -121,6 +121,12 @@ const App = () => {
           console.log(e);
         }
         try {
+          let array = [];
+          await AsyncStorage.setItem('car', JSON.stringify(array));
+        } catch (e) {
+          console.log(e);
+        }
+        try {
           await AsyncStorage.setItem('user', JSON.stringify(user)).then(() => {
             setTimeout(() => {
               setIsLoggedIn('true');

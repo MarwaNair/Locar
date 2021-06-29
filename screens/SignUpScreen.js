@@ -19,6 +19,7 @@ import {
 } from 'react-native-responsive-screen';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useUser} from '../components/UserProvider';
+import {usecars} from '../components/carProvider';
 
 const SignInScreen = ({navigation}) => {
   const [data, setData] = useState({
@@ -33,6 +34,7 @@ const SignInScreen = ({navigation}) => {
   });
 
   const {setUser} = useUser();
+  const {Stor} = usecars();
   const handleNomChange = val => {
     setData({
       ...data,
@@ -97,7 +99,9 @@ const SignInScreen = ({navigation}) => {
         num: user.num,
         password: user.password,
       };
+
       setUser(user1);
+      Stor([]);
       signUp(user1);
     } else {
       Alert.alert(

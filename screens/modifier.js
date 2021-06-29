@@ -214,7 +214,7 @@ export default function modifier({navigation}) {
                         marginTop: 10,
                       }}>
                       {' '}
-                      N°telephone{' '}
+                      N°téléphone{' '}
                       <Text style={{color: '#707070'}}>
                         {item.NumTlf}{' '}
                       </Text>{' '}
