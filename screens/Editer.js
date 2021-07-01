@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     marginLeft: wp('6%'),
     marginBottom: hp('1%'),
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     top: hp('-2%'),
   },
 

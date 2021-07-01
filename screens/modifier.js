@@ -135,7 +135,7 @@ export default function modifier({navigation}) {
                         marginTop: -10,
                       }}>
                       {' '}
-                      Modele{' '}
+                      Maison{' '}
                       <Text style={{color: '#707070'}}>
                         {item.Maison}{' '}
                       </Text>{' '}
@@ -155,7 +155,7 @@ export default function modifier({navigation}) {
                         marginTop: 10,
                       }}>
                       {' '}
-                      Maison{' '}
+                      Modèle{' '}
                       <Text style={{color: '#707070'}}>
                         {item.Modele}{' '}
                       </Text>{' '}

@@ -159,7 +159,7 @@ export class Hi extends Component {
               marginLeft: 20,
             }}>
             {' '}
-            N°telphone
+            N°téléphone
           </Text>
           <TextInput
             style={{

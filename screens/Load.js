@@ -42,8 +42,8 @@ const Load = ({route, navigation}) => {
             console.log('Position :', pos);
             stopReadSMS();
             navigation.replace('MapScreen', {
-              latitude: '36.72' /*pos.latitude*/,
-              longitude: '3.08' /*pos.longitude*/,
+              latitude: pos.latitude,
+              longitude: pos.longitude,
             });
           }
         }

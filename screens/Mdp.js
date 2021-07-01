@@ -126,7 +126,7 @@ const Mdp = ({navigation}) => {
           <KeyboardAwareScrollView enableOnAndroid={true} style={{flexGrow: 1}}>
             <Text style={styles.Modif}>Ancien mot de passe</Text>
             <TextInput
-              placeholder="* * * * * * * * * * * * *"
+              placeholder="* * * * * * * * * * *"
               style={styles.Modif2}
               onChangeText={val => handlePrevPasswordChange(val)}></TextInput>
 
@@ -134,7 +134,7 @@ const Mdp = ({navigation}) => {
 
             <Text style={styles.Modif}>Nouveau mot de passe</Text>
             <TextInput
-              placeholder="* * * * * * * * * * * * *"
+              placeholder="* * * * * * * * * * *"
               style={styles.Modif2}
               onChangeText={val => handlePasswordChange(val)}></TextInput>
 
@@ -142,7 +142,7 @@ const Mdp = ({navigation}) => {
 
             <Text style={styles.Modif}>Confirmer mot de passe</Text>
             <TextInput
-              placeholder="* * * * * * * * * * * * *"
+              placeholder="* * * * * * * * * * *"
               keyboardType="email-address"
               autoCompleteType="email"
               style={styles.Modif2}

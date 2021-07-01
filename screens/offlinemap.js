@@ -1,5 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import {
+  Alert,
   StyleSheet,
   View,
   Text,
@@ -7,11 +8,13 @@ import {
   Image,
   Modal,
   Animated,
+  Dimensions,
 } from 'react-native';
 import MapboxGL, {Logger} from '@react-native-mapbox-gl/maps';
 import ShapeSource from './shapeSource';
 import BottomSheet from 'react-native-bottomsheet-reanimated';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
+import geoViewport from '@mapbox/geo-viewport';
 
 MapboxGL.setAccessToken(
   'sk.eyJ1IjoiYm91Y2hyYWNoZXRpYmkiLCJhIjoiY2tvN2VtYTY2MG9nbDJvcGRmbnp1eW81dSJ9.S-Mr6rb9gaF4_jQuB3cQjg',
@@ -30,6 +33,9 @@ Logger.setLogCallback(log => {
   }
   return false;
 });
+
+const CENTER_COORD = [-73.970895, 40.723279];
+const MAPBOX_VECTOR_TILE_SIZE = 512;
 
 const styles = StyleSheet.create({
   page: {
@@ -95,9 +101,105 @@ export default class Offlinemap extends Component {
     super(props);
 
     this.state = {
-      uri: '',
+      name: 'alger',
+      offlineRegion: null,
+      offlineRegionStatus: null,
       modalVisible: false,
     };
+
+    this.onDownloadProgress = this.onDownloadProgress.bind(this);
+    this.onDidFinishLoadingStyle = this.onDidFinishLoadingStyle.bind(this);
+
+    this.onResume = this.onResume.bind(this);
+    this.onPause = this.onPause.bind(this);
+    this.onStatusRequest = this.onStatusRequest.bind(this);
+  }
+  componentDidMount = () => {
+    this.showModal();
+  };
+  componentWillUnmount() {
+    // avoid setState warnings if we back out before we finishing downloading
+    // MapboxGL.offlineManager.deletePack(this.state.name);
+    MapboxGL.offlineManager.unsubscribe('alger');
+  }
+
+  async onDidFinishLoadingStyle() {
+    const {width, height} = Dimensions.get('window');
+    const bounds = geoViewport.bounds(
+      CENTER_COORD,
+      12,
+      [width, height],
+      MAPBOX_VECTOR_TILE_SIZE,
+    );
+
+    const options = {
+      name: this.state.name,
+      styleURL: MapboxGL.StyleURL.Street,
+      bounds: [
+        [2.7774, 36.5652],
+        [3.431, 36.8563],
+      ],
+      minZoom: 0,
+      maxZoom: 15,
+    };
+
+    const offlinePack = await MapboxGL.offlineManager
+      .getPack('alger')
+      .then(async offlinePack => {
+        console.log(offlinePack);
+        if (!offlinePack) {
+          // start download
+          await MapboxGL.offlineManager.createPack(
+            options,
+            this.onDownloadProgress,
+          );
+        }
+      });
+  }
+
+  onDownloadProgress(offlineRegion, offlineRegionStatus) {
+    this.setState({
+      name: offlineRegion.name,
+      offlineRegion,
+      offlineRegionStatus,
+    });
+  }
+
+  onResume() {
+    if (this.state.offlineRegion) {
+      this.state.offlineRegion.resume();
+    }
+  }
+
+  onPause() {
+    if (this.state.offlineRegion) {
+      this.state.offlineRegion.pause();
+    }
+  }
+
+  async onStatusRequest() {
+    if (this.state.offlineRegion) {
+      const offlineRegionStatus = await this.state.offlineRegion.status();
+      Alert.alert('Get Status', JSON.stringify(offlineRegionStatus, null, 2));
+    }
+  }
+
+  _formatPercent() {
+    if (!this.state.offlineRegionStatus) {
+      return '0%';
+    }
+    return Math.round(this.state.offlineRegionStatus.percentage / 10) / 10;
+  }
+
+  _getRegionDownloadState(downloadState) {
+    switch (downloadState) {
+      case MapboxGL.OfflinePackDownloadState.Active:
+        return 'Active';
+      case MapboxGL.OfflinePackDownloadState.Complete:
+        return 'Complete';
+      default:
+        return 'Inactive';
+    }
   }
 
   showModal = () => {
@@ -111,20 +213,10 @@ export default class Offlinemap extends Component {
     }, 1500);
   };
 
-  componentDidMount = () => {
-    this.showModal();
-    this.onTakeSnapshot();
-  };
-
-  async onTakeSnapshot() {
-    const uri = await this.map.takeSnap(false).then(uri => {
-      this.setState({uri});
-    });
-  }
-
   render() {
-    const LONG = Number(this.props.route.params.longitude);
-    const LAT = Number(this.props.route.params.latitude);
+    var LONG = Number(this.props.route.params.longitude);
+    var LAT = Number(this.props.route.params.latitude);
+    const {offlineRegionStatus} = this.state;
     return (
       <View style={{flex: 1}}>
         <View style={styles.mapContainer}>
@@ -140,22 +232,17 @@ export default class Offlinemap extends Component {
             </View>
           </Modal>
           <MapboxGL.MapView
-            ref={ref => (this.map = ref)}
+            ref={c => (this._map = c)}
+            onPress={this.onPress}
+            onDidFinishLoadingMap={this.onDidFinishLoadingStyle}
             style={styles.map}
             logoEnabled={false}>
             <ShapeSource long={LONG} lat={LAT}></ShapeSource>
             <MapboxGL.Camera
-              ref={ref => (this.camera = ref)}
               zoomLevel={10}
-              pitch={45}
-              centerCoordinate={[LONG, LAT]}>
-              {this.state.uri ? (
-                <Image
-                  resizeMode="contain"
-                  style={{flex: 1, backgroundColor: 'green'}}
-                  source={{uri: this.state.uri}}></Image>
-              ) : null}
-            </MapboxGL.Camera>
+              centerCoordinate={[LONG, LAT]}
+              pitch={40}
+            />
           </MapboxGL.MapView>
         </View>
         <BottomSheet
@@ -178,7 +265,7 @@ export default class Offlinemap extends Component {
                     justifyContent: 'center',
                     width: '80%',
                     height: '45%',
-                    bottom: '-40%',
+                    bottom: '-10%',
                   }}>
                   <Image
                     source={require('./assets/home.png')}
@@ -188,25 +275,17 @@ export default class Offlinemap extends Component {
                 </TouchableOpacity>
               </View>
 
-              <View style={{flex: 1}}>
-                <Text
-                  style={{
-                    fontFamily: 'Montserrat-Regular',
-                    textAlign: 'center',
-                  }}></Text>
+              <View style={{flex: 1, bottom: -15}}>
                 <Text
                   numberOfLines={1}
                   style={{
                     fontFamily: 'Montserrat-Regular',
                     textAlign: 'center',
+                    marginBottom: 4,
                   }}>
                   Latitude: {LAT}
                 </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Montserrat-Regular',
-                    textAlign: 'center',
-                  }}></Text>
+
                 <Text
                   numberOfLines={1}
                   style={{
@@ -215,6 +294,15 @@ export default class Offlinemap extends Component {
                   }}>
                   Longitude: {LONG}
                 </Text>
+                {offlineRegionStatus !== null ? (
+                  <Text
+                    style={{
+                      fontFamily: 'Montserrat-Regular',
+                      textAlign: 'center',
+                    }}>
+                    Download Percent: {offlineRegionStatus.percentage}%
+                  </Text>
+                ) : null}
               </View>
 
               <View style={{flex: 1}}>
@@ -227,7 +315,7 @@ export default class Offlinemap extends Component {
                     justifyContent: 'center',
                     width: '80%',
                     height: '45%',
-                    bottom: '-40%',
+                    bottom: '-10%',
                   }}>
                   <Image
                     source={require('./assets/sos.png')}
