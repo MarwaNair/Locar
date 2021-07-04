@@ -48,13 +48,15 @@ export default function localiser({navigation}) {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ParametreScreen')}>
+          onPress={() => {
+            navigation.navigate('ParametreScreen');
+          }}>
           <Image
             source={require('../assets/menu.png')}
             style={{
               height: 20,
               width: 20,
-              marginLeft: 370,
+              marginLeft: wp('90%'),
               marginTop: hp('1.5%'),
             }}
           />

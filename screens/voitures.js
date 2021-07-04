@@ -185,7 +185,7 @@ export default function voitures({navigation}) {
             );
           }}
         />
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', bottom: hp('2%')}}>
           <TouchableOpacity
             onPress={() => navigation.navigate('ModifierScreen')}>
             <Image
@@ -202,8 +202,10 @@ export default function voitures({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.footer}></View>
-      <TouchableOpacity onPress={() => navigation.navigate('ParametreScreen')}>
+
+      <TouchableOpacity
+        style={{marginBottom: hp('2%')}}
+        onPress={() => navigation.navigate('ParametreScreen')}>
         <View style={{backgroundColor: '#fff'}}>
           <Image source={require('../assets/back.png')} style={styles.back} />
         </View>

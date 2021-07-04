@@ -46,7 +46,7 @@ const Mdp = ({navigation}) => {
 
   const handleUpdate = async () => {
     if (data.prevPassword === user.password) {
-      if (data.newPassword === data.newPasswordConf) {
+      if (data.newPassword === data.newPasswordConf && data.newPassword != '') {
         let user1 = {
           nom: user.nom,
           prenom: user.prenom,
@@ -122,8 +122,13 @@ const Mdp = ({navigation}) => {
         </View>
 
         <View style={{flex: 1}}>
-          <View style={styles.line}></View>
           <KeyboardAwareScrollView enableOnAndroid={true} style={{flexGrow: 1}}>
+            <View
+              style={[
+                styles.line,
+                {top: hp('0%'), marginBottom: hp('1%')},
+              ]}></View>
+
             <Text style={styles.Modif}>Ancien mot de passe</Text>
             <TextInput
               placeholder="* * * * * * * * * * *"
@@ -140,7 +145,7 @@ const Mdp = ({navigation}) => {
 
             <View style={styles.sline}></View>
 
-            <Text style={styles.Modif}>Confirmer mot de passe</Text>
+            <Text style={styles.Modif}>Confirmation</Text>
             <TextInput
               placeholder="* * * * * * * * * * *"
               keyboardType="email-address"
@@ -167,13 +172,7 @@ const Mdp = ({navigation}) => {
             />
           </TouchableOpacity>
 
-          <View style={{position: 'absolute', bottom: hp('3%')}}>
-            <View
-              style={{
-                borderBottomColor: '#EBEBEB',
-                borderBottomWidth: 2,
-                width: wp('100%'),
-              }}></View>
+          <View style={{position: 'absolute', bottom: hp('4.5%')}}>
             <TouchableOpacity
               style={{
                 width: wp('10%'),
@@ -190,7 +189,6 @@ const Mdp = ({navigation}) => {
                   marginStart: wp('4%'),
                   height: hp('2%'),
                   width: wp('8%'),
-                  bottom: hp('0.5%'),
                 }}
                 resizeMode="contain"
               />
@@ -242,7 +240,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: hp('-13%'),
     marginStart: wp('33.5%'),
-    fontSize: wp('8.5%'),
+    fontSize: wp('7%'),
     fontFamily: 'Montserrat-Bold',
     color: '#FFFFFF',
   },

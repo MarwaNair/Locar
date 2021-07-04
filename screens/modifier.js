@@ -135,7 +135,7 @@ export default function modifier({navigation}) {
                         marginTop: -10,
                       }}>
                       {' '}
-                      Maison{' '}
+                      Maison{'          '}
                       <Text style={{color: '#707070'}}>
                         {item.Maison}{' '}
                       </Text>{' '}
@@ -155,7 +155,7 @@ export default function modifier({navigation}) {
                         marginTop: 10,
                       }}>
                       {' '}
-                      Modèle{' '}
+                      Modèle{'          '}
                       <Text style={{color: '#707070'}}>
                         {item.Modele}{' '}
                       </Text>{' '}
@@ -175,7 +175,7 @@ export default function modifier({navigation}) {
                         marginTop: 10,
                       }}>
                       {' '}
-                      Couleur{' '}
+                      Couleur{'         '}
                       <Text style={{color: '#707070'}}>
                         {item.Couleur}{' '}
                       </Text>{' '}
@@ -195,7 +195,7 @@ export default function modifier({navigation}) {
                         marginTop: 10,
                       }}>
                       {' '}
-                      Matricule{' '}
+                      Matricule{'      '}
                       <Text style={{color: '#707070'}}>
                         {item.Matricule}{' '}
                       </Text>{' '}
@@ -214,7 +214,7 @@ export default function modifier({navigation}) {
                         marginTop: 10,
                       }}>
                       {' '}
-                      N°téléphone{' '}
+                      N°téléphone{'   '}
                       <Text style={{color: '#707070'}}>
                         {item.NumTlf}{' '}
                       </Text>{' '}
@@ -235,34 +235,9 @@ export default function modifier({navigation}) {
             );
           }}
         />
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('VoituresScreen')}>
-            <Image
-              source={require('../assets/Annuler2.png')}
-              style={{
-                width: wp('40%'),
-                height: hp('10%'),
-                marginTop: 2,
-                marginBottom: 2,
-                marginLeft: wp('2%'),
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('VoituresScreen')}>
-            <Image
-              source={require('../assets/confimer2.png')}
-              style={{
-                width: wp('39%'),
-                height: hp('8.5%'),
-                marginTop: 2,
-                marginBottom: 2,
-                marginLeft: wp('17%'),
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('VoituresScreen')}>
+          <Image source={require('../assets/back.png')} style={styles.back} />
+        </TouchableOpacity>
       </View>
     </View>
   );

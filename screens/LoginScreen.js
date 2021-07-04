@@ -1,122 +1,129 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
-    StyleSheet,
-    Text,
-    Button,
-    View,
-    Image,
-    TouchableOpacity,
-  } from 'react-native';
-  import LinearGradient from 'react-native-linear-gradient';
-  import * as Animatable from 'react-native-animatable';
-  import {windowHeight , windowWidth} from '../constants/size';
-  import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+  StyleSheet,
+  Text,
+  Button,
+  View,
+  Image,
+  TouchableOpacity,
+  PermissionsAndroid,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
+import {windowHeight, windowWidth} from '../constants/size';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
-  const LoginScreen = ({navigation}) => {
-  
+/* const LoginScreen = ({navigation}) => {
+  const requestPermissions = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.SEND_SMS,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can read the phone state');
+      } else {
+        console.log('permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  useEffect(() => {
+    requestPermissions();
+  });
+*/
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Animatable.Image
+          animation="bounceIn"
+          duration={4000}
+          source={require('../assets/logo.png')}
+          style={styles.logo}
+          resizeMode="stretch"
+        />
+      </View>
 
-    return (
-      
-      <View style={styles.container}>
-        <View style={styles.header} >
-          <Animatable.Image  animation="bounceIn" duration={4000}
-           source={require('../assets/logo.png')} style={styles.logo} resizeMode="stretch"  />
-        </View>
- 
-        <Animatable.View  style={{flex:2}} animation="fadeInUpBig">
+      <Animatable.View style={{flex: 2}} animation="fadeInUpBig">
         <LinearGradient
           style={styles.footer}
-          colors={['#407CEE','#508FF3' ,'#69ADFA']}
-          useAngle={true} angle={34} 
-        >
-          <Text style={styles.title}>
-            Bienvenue !
-          </Text>
+          colors={['#407CEE', '#508FF3', '#69ADFA']}
+          useAngle={true}
+          angle={34}>
+          <Text style={styles.title}>Bienvenue !</Text>
           <View style={styles.buttons}>
-          <TouchableOpacity  onPress ={() => navigation.navigate("SignInScreen")} style={[styles.signIn  , {backgroundColor:'#66AAF9'}]} >
-          <Text style={styles.textSign}>
-            Se connecter 
-          </Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity  onPress ={() => navigation.navigate("SignUpScreen")} style={[styles.signIn  , {backgroundColor:'#FEBE33'}]}>
-          <Text style={styles.textSign}>
-          S'inscrire 
-          </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SignInScreen')}
+              style={[styles.signIn, {backgroundColor: '#66AAF9'}]}>
+              <Text style={styles.textSign}>Se connecter</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SignUpScreen')}
+              style={[styles.signIn, {backgroundColor: '#FEBE33'}]}>
+              <Text style={styles.textSign}>S'inscrire</Text>
+            </TouchableOpacity>
           </View>
-          
         </LinearGradient>
-        </Animatable.View>
-        
-        </View>
-      
+      </Animatable.View>
+    </View>
+  );
+};
+export default LoginScreen;
 
-       
-
-   
-       
-     
-      
-      
-     );
-  };
-  export default LoginScreen;
-
-  const height_logo = windowHeight * 0.15;
-  const width_logo = windowWidth * 0.8  ;
+const height_logo = windowHeight * 0.15;
+const width_logo = windowWidth * 0.8;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    backgroundColor: '#fff'
+    flex: 1,
+    backgroundColor: '#fff',
   },
   header: {
-      flex: 2,
-      justifyContent: 'center',
-      alignItems: 'center'
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   footer: {
-      flex:1,
-      borderTopLeftRadius: 60,
-      borderTopRightRadius: 60,
-      paddingVertical: hp("6%"),
-      paddingHorizontal: wp("3%"),
-      flexDirection:'column',
-      alignItems:'center'
+    flex: 1,
+    borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+    paddingVertical: hp('6%'),
+    paddingHorizontal: wp('3%'),
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   logo: {
-      width: width_logo,
-      height: height_logo,
-      alignSelf:'center' 
+    width: width_logo,
+    height: height_logo,
+    alignSelf: 'center',
   },
   title: {
-      color: '#fff',
-      fontFamily:'Montserrat-SemiBold',
-      fontSize: wp("10%"),
-      alignSelf:'center'
-      
+    color: '#fff',
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: wp('10%'),
+    alignSelf: 'center',
   },
 
   buttons: {
-      marginTop: hp("4%"),
-      
+    marginTop: hp('4%'),
   },
   signIn: {
-      width: wp("45%"),
-      height: hp("6.5%"),
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 24,
-      flexDirection: 'row',
-      marginTop:hp("3%"),
-      
-      
+    width: wp('45%'),
+    height: hp('6.5%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 24,
+    flexDirection: 'row',
+    marginTop: hp('3%'),
   },
   textSign: {
     color: '#fff',
-    fontFamily:'Montserrat-SemiBold',
-    fontSize: wp("5%"),
-    alignSelf:'center'
-  }
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: wp('5%'),
+    alignSelf: 'center',
+  },
 });

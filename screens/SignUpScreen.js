@@ -91,7 +91,18 @@ const SignInScreen = ({navigation}) => {
   const {signUp} = useContext(AuthContext);
 
   const registerHandle = user => {
-    if (user.password === user.passwordConf) {
+    console.log('nom', user.nom);
+    if (
+      user.nom == '' ||
+      user.prenom.trim() === '' ||
+      user.email.trim() === '' ||
+      user.num.trim() === '' ||
+      user.password.trim() === ''
+    ) {
+      Alert.alert('Echec! ', 'Veuillez entrer toutes vos informations.', [
+        {text: 'OK'},
+      ]);
+    } else if (user.password === user.passwordConf) {
       let user1 = {
         nom: user.nom,
         prenom: user.prenom,

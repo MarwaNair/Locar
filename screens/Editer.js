@@ -113,30 +113,25 @@ const Editer = ({navigation}) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{position: 'absolute', bottom: hp('3%')}}>
-            <View
-              style={{
-                borderBottomColor: '#EBEBEB',
-                borderBottomWidth: 2,
-                width: wp('100%'),
-              }}></View>
+          <View>
             <TouchableOpacity
               style={{
                 width: wp('8%'),
                 justifyContent: 'center',
                 flexDirection: 'column',
                 alignItems: 'center',
+                marginTop: hp('2%'),
+                marginStart: wp('4%'),
+                position: 'absolute',
+                bottom: hp('-6%'),
               }}
               onPress={() => navigation.goBack()}>
               <Image
                 source={require('../assets/ret.png')}
                 style={{
                   alignSelf: 'flex-start',
-                  marginTop: hp('2%'),
-                  marginStart: wp('4%'),
                   height: hp('2%'),
                   width: wp('8%'),
-                  bottom: hp('0.5%'),
                 }}
                 resizeMode="contain"
               />

@@ -93,21 +93,13 @@ const Parametre = ({navigation}) => {
           />
         </TouchableOpacity>
 
-        <View
-          style={{
-            borderBottomColor: '#EBEBEB',
-            borderBottomWidth: 2,
-            width: wp('100%'),
-            height: hp('2%'),
-            bottom: hp('-9%'),
-          }}></View>
-
         <TouchableOpacity
           style={{
             width: wp('35%'),
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
+            bottom: hp('-15%'),
           }}
           onPress={e => signOut()}>
           <Image
@@ -116,7 +108,6 @@ const Parametre = ({navigation}) => {
               alignSelf: 'flex-start',
               marginLeft: wp('5%'),
               width: wp('30%'),
-              top: hp('5%'),
             }}
             resizeMode="contain"
           />

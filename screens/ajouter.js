@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {Component} from 'react';
 import {
   StatusBar,
@@ -10,6 +10,8 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  Modal,
+  Alert,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -51,7 +53,7 @@ export class Hi extends Component {
               marginLeft: 20,
             }}>
             {' '}
-            Maison{' '}
+            Maison{'            '}
           </Text>
           <TextInput
             style={{
@@ -184,47 +186,58 @@ export default function ajouter({navigation}) {
   const {user} = useUser();
   const {cars, Stor} = usecars();
   var array = cars;
+  const [modalVisible, setModalVisible] = useState(false);
   const store = async CAR => {
-    const Savecar = CAR;
-    const existingcar = await AsyncStorage.getItem('car');
-    let newCar = JSON.parse(existingcar);
-    if (!newCar) {
-      newCar = [];
+    if (
+      CAR.Maison == '' ||
+      CAR.Modele == '' ||
+      CAR.Matricule == '' ||
+      CAR.NumTlf == '' ||
+      CAR.Couleur == ''
+    ) {
+      Alert.alert(
+        'Echec! ',
+        'Veuillez entrer toutes les informations concernant votre voiture.',
+        [{text: 'OK'}],
+      );
+    } else {
+      const Savecar = CAR;
+      const existingcar = await AsyncStorage.getItem('car');
+      let newCar = JSON.parse(existingcar);
+      if (!newCar) {
+        newCar = [];
+      }
+      newCar.push(Savecar);
+      Stor(newCar);
+      try {
+        await AsyncStorage.setItem('car', JSON.stringify(newCar));
+      } catch (e) {
+        console.log(e);
+      }
+      console.log('Done.');
+      setModalVisible(true);
+      setTimeout(() => {
+        setModalVisible(false);
+        navigation.navigate('QRScreen');
+      }, 1000);
     }
-    newCar.push(Savecar);
-    Stor(newCar);
-    try {
-      await AsyncStorage.setItem('car', JSON.stringify(newCar));
-    } catch (e) {
-      console.log(e);
-    }
-
-    console.log('Done.');
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('LocaliserScreen');
-          }}>
-          <Image
-            source={require('../assets/menu.png')}
-            style={{
-              height: 20,
-              width: 20,
-              marginLeft: wp('90%'),
-              marginTop: hp('1.5%'),
-            }}
-          />
-        </TouchableOpacity>
         <Image source={require('../assets/avatar.png')} style={styles.avatar} />
         <Text style={styles.text}> {user.prenom}</Text>
 
         <Text style={styles.voiture}> {user.email}</Text>
       </View>
 
+      <Modal animationType="slide" transparent visible={modalVisible}>
+        <View style={styles.modalView}>
+          <Image source={require('./assets/succes.png')}></Image>
+          <Text style={styles.modalText}>Voiture ajoutée avec succès</Text>
+        </View>
+      </Modal>
       <KeyboardAwareScrollView enableOnAndroid={true}>
         <View
           style={{
@@ -278,7 +291,7 @@ export default function ajouter({navigation}) {
                 height: 1.5,
                 width: '100%',
                 backgroundColor: '#EBEBEB',
-                marginTop: '2%',
+                marginTop: '1%',
                 marginBottom: '1%',
               }}></View>
 
@@ -304,7 +317,6 @@ export default function ajouter({navigation}) {
             <TouchableOpacity
               onPress={() => {
                 store(global.car);
-                navigation.navigate('QRScreen');
               }}>
               <Image
                 source={require('../assets/confimer2.png')}
@@ -345,7 +357,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   avatar: {
-    marginTop: hp('-0.5%'),
+    marginTop: hp('2%'),
     marginStart: wp('-3%'),
     height: hp('15%'),
     width: wp('45%'),
@@ -377,5 +389,29 @@ const styles = StyleSheet.create({
     marginStart: wp('4%'),
     height: hp('2%'),
     width: wp('7.5%'),
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Regular',
+  },
+  modalView: {
+    marginHorizontal: '15%',
+    marginVertical: '50%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+  },
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 });

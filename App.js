@@ -130,7 +130,7 @@ const App = () => {
           await AsyncStorage.setItem('user', JSON.stringify(user)).then(() => {
             setTimeout(() => {
               setIsLoggedIn('true');
-            }, 2000);
+            }, 1000);
           });
         } catch (e) {
           console.log(e);

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -63,10 +64,21 @@ const Profil = ({navigation}) => {
   };
 
   const handleUpdate = async () => {
-    setUser(data);
-    await AsyncStorage.setItem('user', JSON.stringify(data));
+    if (
+      data.nom == '' ||
+      data.prenom === '' ||
+      data.email === '' ||
+      data.num === ''
+    ) {
+      Alert.alert('Echec! ', 'Veuillez entrer toutes vos informations.', [
+        {text: 'OK'},
+      ]);
+    } else {
+      setUser(data);
+      await AsyncStorage.setItem('user', JSON.stringify(data));
 
-    navigation.goBack();
+      navigation.goBack();
+    }
   };
 
   return (
@@ -127,7 +139,7 @@ const Profil = ({navigation}) => {
               {
                 position: 'absolute',
                 bottom: hp('70%'),
-                marginVertical: hp('2%'),
+                marginVertical: hp('1%'),
               },
             ]}></View>
           <KeyboardAwareScrollView enableOnAndroid={true} style={{flexGrow: 1}}>
@@ -198,30 +210,25 @@ const Profil = ({navigation}) => {
             />
           </TouchableOpacity>
 
-          <View style={{position: 'absolute', bottom: hp('3%')}}>
-            <View
-              style={{
-                borderBottomColor: '#EBEBEB',
-                borderBottomWidth: 2,
-                width: wp('100%'),
-              }}></View>
+          <View>
             <TouchableOpacity
               style={{
-                width: wp('10%'),
+                width: wp('8%'),
                 justifyContent: 'center',
                 flexDirection: 'column',
                 alignItems: 'center',
+                marginTop: hp('2%'),
+                marginStart: wp('4%'),
+                position: 'absolute',
+                bottom: hp('4.5%'),
               }}
               onPress={() => navigation.goBack()}>
               <Image
                 source={require('../assets/ret.png')}
                 style={{
                   alignSelf: 'flex-start',
-                  marginTop: hp('2%'),
-                  marginStart: wp('4%'),
                   height: hp('2%'),
                   width: wp('8%'),
-                  bottom: hp('0.5%'),
                 }}
                 resizeMode="contain"
               />
