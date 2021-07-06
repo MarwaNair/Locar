@@ -33,7 +33,7 @@ export class Hi extends Component {
       Modele: '',
       Couleur: '',
       Matricule: '',
-      NumTlf: '',
+      NumTlf: '+213',
     };
   }
 
@@ -175,6 +175,7 @@ export class Hi extends Component {
             onChangeText={text => this.setState({NumTlf: text})}
             placeholderTextColor="#A2A1A1"
             placeholder="+213000000000     "
+            value={this.state.NumTlf}
           />
         </View>
       </View>
@@ -192,8 +193,9 @@ export default function ajouter({navigation}) {
       CAR.Maison == '' ||
       CAR.Modele == '' ||
       CAR.Matricule == '' ||
-      CAR.NumTlf == '' ||
-      CAR.Couleur == ''
+      CAR.NumTlf == '+213' ||
+      CAR.Couleur == '' ||
+      CAR.NumTlf == ''
     ) {
       Alert.alert(
         'Echec! ',
@@ -201,6 +203,11 @@ export default function ajouter({navigation}) {
         [{text: 'OK'}],
       );
     } else {
+      if (CAR.NumTlf.charAt(0) == '0') {
+        let num = CAR.NumTlf.slice(1);
+        CAR.NumTlf = '+213' + num;
+      }
+
       const Savecar = CAR;
       const existingcar = await AsyncStorage.getItem('car');
       let newCar = JSON.parse(existingcar);

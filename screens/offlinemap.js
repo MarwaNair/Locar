@@ -14,7 +14,6 @@ import MapboxGL, {Logger} from '@react-native-mapbox-gl/maps';
 import ShapeSource from './shapeSource';
 import BottomSheet from 'react-native-bottomsheet-reanimated';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
-import geoViewport from '@mapbox/geo-viewport';
 
 MapboxGL.setAccessToken(
   'sk.eyJ1IjoiYm91Y2hyYWNoZXRpYmkiLCJhIjoiY2tvN2VtYTY2MG9nbDJvcGRmbnp1eW81dSJ9.S-Mr6rb9gaF4_jQuB3cQjg',
@@ -34,7 +33,6 @@ Logger.setLogCallback(log => {
   return false;
 });
 
-const CENTER_COORD = [-73.970895, 40.723279];
 const MAPBOX_VECTOR_TILE_SIZE = 512;
 
 const styles = StyleSheet.create({
@@ -125,12 +123,6 @@ export default class Offlinemap extends Component {
 
   async onDidFinishLoadingStyle() {
     const {width, height} = Dimensions.get('window');
-    const bounds = geoViewport.bounds(
-      CENTER_COORD,
-      12,
-      [width, height],
-      MAPBOX_VECTOR_TILE_SIZE,
-    );
 
     const options = {
       name: this.state.name,
@@ -152,6 +144,11 @@ export default class Offlinemap extends Component {
           await MapboxGL.offlineManager.createPack(
             options,
             this.onDownloadProgress,
+          );
+          Alert.alert(
+            'Téléchargement de la MAP en cours !',
+            'Ne pas quitter cet ecran avant la fin du téléchargement.',
+            [{text: 'OK'}],
           );
         }
       });
@@ -300,7 +297,7 @@ export default class Offlinemap extends Component {
                       fontFamily: 'Montserrat-Regular',
                       textAlign: 'center',
                     }}>
-                    Download Percent: {offlineRegionStatus.percentage}%
+                    Téléchargement : {offlineRegionStatus.percentage}%
                   </Text>
                 ) : null}
               </View>

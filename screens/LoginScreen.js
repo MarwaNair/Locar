@@ -16,25 +16,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-/* const LoginScreen = ({navigation}) => {
-  const requestPermissions = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.SEND_SMS,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can read the phone state');
-      } else {
-        console.log('permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-  useEffect(() => {
-    requestPermissions();
-  });
-*/
+const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
