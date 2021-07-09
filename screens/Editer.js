@@ -123,7 +123,7 @@ const Editer = ({navigation}) => {
                 marginTop: hp('2%'),
                 marginStart: wp('4%'),
                 position: 'absolute',
-                bottom: hp('-6%'),
+                bottom: hp('-7.5%'),
               }}
               onPress={() => navigation.goBack()}>
               <Image

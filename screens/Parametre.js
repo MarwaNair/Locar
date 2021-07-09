@@ -99,7 +99,7 @@ const Parametre = ({navigation}) => {
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
-            bottom: hp('-15%'),
+            bottom: hp('-7%'),
           }}
           onPress={e => signOut()}>
           <Image
