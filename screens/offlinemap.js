@@ -14,7 +14,10 @@ import MapboxGL, {Logger} from '@react-native-mapbox-gl/maps';
 import ShapeSource from './shapeSource';
 import BottomSheet from 'react-native-bottomsheet-reanimated';
 import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 MapboxGL.setAccessToken(
   'sk.eyJ1IjoiYm91Y2hyYWNoZXRpYmkiLCJhIjoiY2tvN2VtYTY2MG9nbDJvcGRmbnp1eW81dSJ9.S-Mr6rb9gaF4_jQuB3cQjg',
 );
@@ -117,7 +120,7 @@ export default class Offlinemap extends Component {
   };
   componentWillUnmount() {
     // avoid setState warnings if we back out before we finishing downloading
-    // MapboxGL.offlineManager.deletePack(this.state.name);
+    // MapboxGL.offlineManager.deletePack('alger');
     MapboxGL.offlineManager.unsubscribe('alger');
   }
 
@@ -147,7 +150,7 @@ export default class Offlinemap extends Component {
           );
           Alert.alert(
             'Téléchargement de la MAP en cours !',
-            'Ne pas quitter cet ecran avant la fin du téléchargement.',
+            'Ne quittez pas cet ecran avant la fin du téléchargement.',
             [{text: 'OK'}],
           );
         }
@@ -185,7 +188,7 @@ export default class Offlinemap extends Component {
     if (!this.state.offlineRegionStatus) {
       return '0%';
     }
-    return Math.round(this.state.offlineRegionStatus.percentage / 10) / 10;
+    return Math.round(this.state.offlineRegionStatus.percentage / 100);
   }
 
   _getRegionDownloadState(downloadState) {
@@ -272,7 +275,7 @@ export default class Offlinemap extends Component {
                 </TouchableOpacity>
               </View>
 
-              <View style={{flex: 1, bottom: -15}}>
+              <View style={{width: wp('40%'), bottom: -15}}>
                 <Text
                   numberOfLines={1}
                   style={{
@@ -288,6 +291,7 @@ export default class Offlinemap extends Component {
                   style={{
                     fontFamily: 'Montserrat-Regular',
                     textAlign: 'center',
+                    marginBottom: 4,
                   }}>
                   Longitude: {LONG}
                 </Text>
@@ -297,7 +301,8 @@ export default class Offlinemap extends Component {
                       fontFamily: 'Montserrat-Regular',
                       textAlign: 'center',
                     }}>
-                    Téléchargement : {offlineRegionStatus.percentage}%
+                    Téléchargement: {Math.round(offlineRegionStatus.percentage)}
+                    %
                   </Text>
                 ) : null}
               </View>

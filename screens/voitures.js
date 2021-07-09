@@ -168,7 +168,7 @@ export default function voitures({navigation}) {
                     {' '}
                     N°téléphone{'   '}
                     <Text style={{color: '#707070'}}>{item.NumTlf} </Text>
-                    {'           '}
+                    {'   '}
                   </Text>
                 </View>
 
@@ -177,7 +177,7 @@ export default function voitures({navigation}) {
                   style={{
                     width: wp('21%'),
                     height: hp('9%'),
-                    marginLeft: wp('5%'),
+                    marginLeft: wp('3%'),
                     marginTop: hp('14%'),
                   }}
                 />
