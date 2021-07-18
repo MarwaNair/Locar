@@ -19,8 +19,8 @@ const HomeScreen = ({navigation}) => {
   const {user} = useUser();
 
   setTimeout(() => {
-    navigation.replace('LocaliserScreen');
-  }, 2000);
+    navigation.replace('ParametreScreen');
+  }, 1500);
 
   return (
     <View style={styles.container}>

@@ -122,13 +122,10 @@ const Mdp = ({navigation}) => {
         </View>
 
         <View style={{flex: 1}}>
-          <KeyboardAwareScrollView enableOnAndroid={true} style={{flexGrow: 1}}>
-            <View
-              style={[
-                styles.line,
-                {top: hp('0%'), marginBottom: hp('1%')},
-              ]}></View>
-
+          <View style={[styles.line, {top: hp('-5%')}]}></View>
+          <KeyboardAwareScrollView
+            enableOnAndroid={true}
+            style={{flexGrow: 1, top: hp('-4%')}}>
             <Text style={styles.Modif}>Ancien mot de passe</Text>
             <TextInput
               placeholder="* * * * * * * * * * *"
@@ -153,7 +150,7 @@ const Mdp = ({navigation}) => {
               style={styles.Modif2}
               onChangeText={val => handlePasswordConfChange(val)}></TextInput>
           </KeyboardAwareScrollView>
-          <View style={styles.line}></View>
+          <View style={[styles.line, {marginVertical: hp('-0.2%')}]}></View>
         </View>
 
         <View style={{flex: 1}}>
@@ -262,18 +259,18 @@ const styles = StyleSheet.create({
 
   Modif: {
     color: '#407CEE',
-    fontSize: wp('4%'),
+    fontSize: wp('3.2%'),
     marginLeft: wp('6%'),
-    marginTop: hp('-1%'),
+    marginTop: hp('-0.5%'),
     fontFamily: 'Montserrat-Regular',
   },
 
   Modif2: {
     color: '#000',
-    fontSize: wp('4%'),
+    fontSize: wp('3.2%'),
     marginLeft: wp('53%'),
     marginBottom: hp('0.5%'),
-    marginTop: hp('-1%'),
+    marginTop: hp('-0.5%'),
     top: hp('-2.8%'),
     fontFamily: 'Montserrat-Regular',
   },
@@ -281,7 +278,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#EBEBEB',
     borderBottomWidth: 2,
     width: wp('100%'),
-    top: hp('-3.5%'),
+    marginVertical: hp('1.5%'),
   },
   sline: {
     borderBottomColor: '#EBEBEB',

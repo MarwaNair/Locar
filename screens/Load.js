@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#000',
     fontFamily: 'Montserrat-Bold',
-    fontSize: wp('5%'),
+    fontSize: wp('4%'),
   },
 });

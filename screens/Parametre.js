@@ -15,6 +15,7 @@ import Profil from './Profil';
 import Editer from './Editer';
 import {useUser} from '../components/UserProvider';
 import {AuthContext} from '../components/Context';
+
 const Parametre = ({navigation}) => {
   const {user} = useUser();
   const {signOut} = useContext(AuthContext);
@@ -85,7 +86,7 @@ const Parametre = ({navigation}) => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('AideScreen')}>
           <Image
             source={require('../assets/aide.png')}
             resizeMode="contain"
@@ -99,7 +100,7 @@ const Parametre = ({navigation}) => {
             justifyContent: 'center',
             flexDirection: 'column',
             alignItems: 'center',
-            bottom: hp('-7%'),
+            bottom: hp('-5.8%'),
           }}
           onPress={e => signOut()}>
           <Image

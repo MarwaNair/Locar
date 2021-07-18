@@ -21,6 +21,7 @@ import modifier from './screens/modifier';
 import localiser from './screens/localiser';
 import Offlinemap from './screens/offlinemap';
 import Load from './screens/Load';
+import Aide from './screens/Aide';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from './components/Context';
 import UserProvider from './components/UserProvider';
@@ -186,6 +187,7 @@ const App = () => {
                   <Stack.Screen name="QRScreen" component={QR} />
                   <Stack.Screen name="LoadScreen" component={Load} />
                   <Stack.Screen name="MapScreen" component={Offlinemap} />
+                  <Stack.Screen name="AideScreen" component={Aide} />
                 </>
               )}
             </Stack.Navigator>

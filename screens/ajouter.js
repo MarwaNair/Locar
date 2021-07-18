@@ -147,7 +147,7 @@ export class Hi extends Component {
             }}
             onChangeText={text => this.setState({Matricule: text})}
             placeholderTextColor="#A2A1A1"
-            placeholder="XXXX-XXX-XX          "
+            placeholder="XXXXX-XXX-XX          "
           />
         </View>
         <View style={{flexDirection: 'row'}}>
