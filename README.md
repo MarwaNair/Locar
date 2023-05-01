@@ -3,6 +3,10 @@ Locar is a mobile application project that provides advanced geolocation capabil
 
 ## User Application
 The User Application enables users to request the precise location of their vehicle(s) and receive real-time GPS coordinates via SMS. Users can also view the location of their vehicle(s) on a map within the application.
+### Features
+Request the precise location of vehicle(s) via SMS
+Receive real-time GPS coordinates of vehicle(s)
+View the location of vehicle(s) on a map within the application
 
 ## Car Application
 The Car Application is responsible for detecting the user's request for location and sending the vehicle's GPS coordinates to the user via SMS. It also sends the GPS coordinates of the vehicle to the database at predefined intervals.
